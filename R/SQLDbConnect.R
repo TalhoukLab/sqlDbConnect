@@ -26,6 +26,7 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
 		# need to turn foreign key constraint on; default is off
 		# https://stackoverflow.com/questions/50852820/correct-usage-of-the-foreign-key-function
 		execute("pragma foreign_keys=on",fetch_result=FALSE)
+		message("call disconnect() when finished working with a connection e.g. sql_con$disconnect()")
     },
 
 	# connect to database (SQLite with remote file)
@@ -44,6 +45,12 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
 		# need to turn foreign key constraint on; default is off
 		# https://stackoverflow.com/questions/50852820/correct-usage-of-the-foreign-key-function
 		execute("pragma foreign_keys=on",fetch_result=FALSE)
+	},
+	
+	# disconnect to database
+	#
+	disconnect = function() {
+		dbDisconnect(sql_con)
 	},
 	
 	# execute sql statements
