@@ -31,6 +31,11 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
 		temp_db_fname <- file.path(tempdir(),"a_temp_file_name_that_is_likely_not_being_used.sqlite")
 		download.file(remote_db_file_url, temp_db_fname, method="curl")
 		sql_con <<- DBI::dbConnect(RSQLite::SQLite(), temp_db_fname)
+		message(paste0(
+			"Connected to SQLite database on remote server.",
+			"Please note the following:\n",
+			"1) READ ONLY access, \n",
+			"2) database is accessed only ONCE at time of database connection.  Subsequent updates on server will NOT be reflected in this connection."))
 	},
 	
 	# execute sql statements
