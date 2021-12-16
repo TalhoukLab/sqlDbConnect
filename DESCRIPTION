@@ -1,0 +1,20 @@
+Type: Package
+Package: sqbDbConnect
+Title: Reference class object to keep track of SQL database connections
+Version: 1.0
+Date: 2021-12-16
+Authors: 
+    c(person(given = Samuel,
+             family = Leung,
+             role = aut,
+             email = Samuel.Leung@vch.ca))
+Description: Reference class object to keep track of SQL database connections
+License: MIT + file LICENSE
+Depends: 
+    R (>= 3.3.0)
+Imports: 
+    assertthat,RSQLite,DBI
+Suggests: 
+    testthat
+Encoding: UTF-8
+RoxygenNote: 7.1.1
