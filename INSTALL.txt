@@ -1,0 +1,30 @@
+# build gz
+setwd("C:\\Users\\samle\\Documents\\workspace\\R\\sqlDbConnect")
+library(roxygen2)
+
+# increment version number
+desc <- read.delim(file="DESCRIPTION",header=FALSE,sep="|",stringsAsFactors=FALSE)
+index <- sapply(desc[,1],startsWith,"Version")
+version_str <- strsplit(desc[index,1]," ")[[1]]
+version_num <- version_str[2]
+version_num <- strsplit(version_num,"\\.")[[1]]
+version_num[2] <- as.numeric(version_num[2])+1
+version_num <- paste(version_num,collapse=".")
+version_str[2] <- version_num
+version_str <- paste(version_str,collapse=" ")
+desc[index,1] <- version_str
+write.table(desc,"DESCRIPTION",row.names=FALSE,col.names=FALSE,quote=FALSE)
+
+roxygen2::roxygenise()
+devtools::document()
+devtools::build()
+
+
+# install package
+setwd("C:\\Users\\samle\\Documents\\workspace\\R\\OCV")
+library(roxygen2)
+devtools::document()
+devtools::install(args="--no-multiarch")
+
+# install via github
+remotes::install_github("TalhoukLab/sqlDbConnect")
