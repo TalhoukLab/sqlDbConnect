@@ -17,6 +17,6 @@ SQLDbConnect class definition
 
 \examples{
 sql_con <- SQLDbConnect$new()
-ocv$connect("C:\\\\Users\\\\samle\\\\Documents\\\\workspace\\\\R\\\\OCV\\\\doc\\\\Data Wish List_controlled vocab.xlsx")
-ocv$is_synonym("age_dx","Age.at.diagnosis.")
+sql_con$connect("http://www.gpecdata.med.ubc.ca/OCV/ocv.sqlite")
+
 }
