@@ -3,3 +3,4 @@
 export(SQLDbConnect)
 exportClasses(SQLDbConnect)
 import(methods)
+import(DBI)
