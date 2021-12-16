@@ -7,8 +7,8 @@
 #'
 #' @examples
 #' sql_con <- SQLDbConnect$new()
-#' ocv$connect("C:\\Users\\samle\\Documents\\workspace\\R\\OCV\\doc\\Data Wish List_controlled vocab.xlsx")
-#' ocv$is_synonym("age_dx","Age.at.diagnosis.")
+#' sql_con$connect("http://www.gpecdata.med.ubc.ca/OCV/ocv.sqlite")
+#' 
 SQLDbConnect <- setRefClass("SQLDbConnect",
   fields = list(
     sql_con = c("DBIConnection")
@@ -17,13 +17,22 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
     initialize = function(){		
 	},  
       
-    # connect to database
+    # connect to database (SQLite with local file or in-memory database)
     #
     # @param db_fname
     connectSQLite = function(db_fname) {
 		sql_con <<- DBI::dbConnect(RSQLite::SQLite(), db_fname)
     },
 
+	# connect to database (SQLite with remote file)
+	#
+	# @param db_fname
+	connectSQLiteRemote = function(remote_db_file_url) {
+		temp_db_fname <- file.path(tempdir(),"a_temp_file_name_that_is_likely_not_being_used.sqlite")
+		download.file(remote_db_file_url, temp_db_fname)
+		sql_con <<- DBI::dbConnect(RSQLite::SQLite(), temp_db_fname)
+	},
+	
 	# execute sql statements
 	#
 	# @param sql_statement

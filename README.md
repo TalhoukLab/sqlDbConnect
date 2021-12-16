@@ -11,5 +11,8 @@ remotes::install_github("TalhoukLab/sqlDbConnect")
 ```
 ## Example
 ``` r
-
+library(sqlDbConnect)
+sql_con <- SQLDbConnect$new()
+sql_con$connectSQLiteRemote("http://www.gpecdata.med.ubc.ca/OCV/ocv.sqlite")
+sql_con$show_tables()
 ```
