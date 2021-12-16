@@ -29,7 +29,7 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
 	# @param db_fname
 	connectSQLiteRemote = function(remote_db_file_url) {
 		temp_db_fname <- file.path(tempdir(),"a_temp_file_name_that_is_likely_not_being_used.sqlite")
-		download.file(remote_db_file_url, temp_db_fname)
+		download.file(remote_db_file_url, temp_db_fname, method="curl")
 		sql_con <<- DBI::dbConnect(RSQLite::SQLite(), temp_db_fname)
 	},
 	
