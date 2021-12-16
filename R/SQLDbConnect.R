@@ -22,6 +22,10 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
     # @param db_fname
     connectSQLite = function(db_fname) {
 		sql_con <<- DBI::dbConnect(RSQLite::SQLite(), db_fname)
+		
+		# need to turn foreign key constraint on; default is off
+		# https://stackoverflow.com/questions/50852820/correct-usage-of-the-foreign-key-function
+		execute("pragma foreign_keys=on",fetch_result=FALSE)
     },
 
 	# connect to database (SQLite with remote file)
@@ -36,6 +40,10 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
 			"Please note the following:\n",
 			"1) READ ONLY access, \n",
 			"2) database is accessed only ONCE at time of database connection.  Subsequent updates on server will NOT be reflected in this connection."))
+
+		# need to turn foreign key constraint on; default is off
+		# https://stackoverflow.com/questions/50852820/correct-usage-of-the-foreign-key-function
+		execute("pragma foreign_keys=on",fetch_result=FALSE)
 	},
 	
 	# execute sql statements
