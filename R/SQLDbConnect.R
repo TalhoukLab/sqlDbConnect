@@ -15,7 +15,6 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
   ),
   methods = list(
     initialize = function(){
-		sql_con <<- NULL
 	},  
       
     # connect to database (SQLite with local file or in-memory database)
@@ -51,10 +50,7 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
 	# disconnect to database
 	#
 	disconnect = function() {
-		if (!is.null(sql_con)) {
-			dbDisconnect(sql_con)
-			sql_con <<- NULL
-		}
+		dbDisconnect(sql_con)
 	},
 	
 	# execute sql statements
@@ -62,10 +58,6 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
 	# @param sql_statement
 	# @param fetch_result - whether to return query result
 	execute = function(sql_statement,fetch_result=TRUE) {
-		if (is.null(sql_con)) {
-			warning("no database connection");
-			return
-		}
 		res <- DBI::dbSendQuery(sql_con,sql_statement)
 		if (fetch_result) {
 			result <- dbFetch(res)
@@ -79,10 +71,6 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
 	
 	# show all database in the database currently connected to
 	show_tables = function(){
-		if (is.null(sql_con)) {
-			warning("no database connection");
-			return
-		}
 		dbListTables(sql_con)
 	})
 )
