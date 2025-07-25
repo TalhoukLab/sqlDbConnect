@@ -20,9 +20,16 @@ SQLDbConnect <- setRefClass("SQLDbConnect",
     # connect to database (SQLite with local file or in-memory database)
     #
     # @param db_fname
-    connectSQLite = function(db_fname) {
+	# @param read_only - whether to load the entire database to memory; default set to FALSE
+	#                    WARNING: if set to true, all write will not get persisted!!!
+    connectSQLite = function(db_fname,read_only=FALSE) {
 		sql_con <<- DBI::dbConnect(RSQLite::SQLite(), db_fname)
-		
+		if (read_only) {
+			memory_con <- dbConnect(RSQLite::SQLite(), ":memory:")
+			RSQLite::sqliteCopyDatabase(sql_con, memory_con)
+			sql_con <<- memory_con
+		}
+
 		# need to turn foreign key constraint on; default is off
 		# https://stackoverflow.com/questions/50852820/correct-usage-of-the-foreign-key-function
 		execute("pragma foreign_keys=on",fetch_result=FALSE)
